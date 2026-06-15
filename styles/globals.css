@@ -1,0 +1,363 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+  --font-chalk: var(--font-chalk);
+  --font-serif: var(--font-serif);
+}
+
+.dark {
+  --background: #0d0d0d;
+  --foreground: #e0e0e0;
+  --card: #111111;
+  --card-foreground: #e0e0e0;
+  --popover: #111111;
+  --popover-foreground: #e0e0e0;
+  --primary: #4a9eff;
+  --primary-foreground: #0d0d0d;
+  --secondary: #77dd77;
+  --secondary-foreground: #0d0d0d;
+  --muted: rgba(17, 17, 17, 0.8);
+  --muted-foreground: #bfbfbf;
+  --accent: #a8dadc;
+  --accent-foreground: #0d0d0d;
+  --destructive: #f4a261;
+  --destructive-foreground: #e0e0e0;
+  --border: rgba(224, 224, 224, 0.15);
+  --input: rgba(17, 17, 17, 0.8);
+  --ring: #4a9eff;
+  --radius: 0.625rem;
+  --sidebar: #0d0d0d;
+  --sidebar-foreground: #e0e0e0;
+  --sidebar-primary: #4a9eff;
+  --sidebar-primary-foreground: #0d0d0d;
+  --sidebar-accent: rgba(17, 17, 17, 0.8);
+  --sidebar-accent-foreground: #e0e0e0;
+  --sidebar-border: rgba(224, 224, 224, 0.15);
+  --sidebar-ring: #4a9eff;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+  --font-chalk: var(--font-chalk);
+  --font-serif: var(--font-serif);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) - 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background: #0d0d0d;
+    background-image:
+      radial-gradient(circle at 15% 25%, rgba(74, 158, 255, 0.015) 1px, transparent 1px),
+      radial-gradient(circle at 85% 75%, rgba(119, 221, 119, 0.012) 1px, transparent 1px),
+      radial-gradient(circle at 45% 60%, rgba(168, 218, 220, 0.01) 1px, transparent 1px);
+    background-size: 200px 200px, 300px 300px, 250px 250px;
+    font-family: var(--font-chalk);
+    position: relative;
+    cursor: crosshair;
+  }
+
+  /* LGT-specific background equations — replaces generic calculus */
+  body::before {
+    content: "H_KS = -J∑□(U□+U□†) + h∑Zⱼ    W[C] = Tr[ ∏_{l∈C} Uₗ ]    Gⱼ|phys⟩ = 0    ⟨W[C]⟩ ~ e^{-σ·Area(C)}    U_F = e^{-iH_FT}    ⟨σᶻ(nT)⟩ → (-1)ⁿM_DTC    ρ̇ = -i[H,ρ] + Σ(LρL†-½{L†L,ρ})    |ψ_F(t)⟩ = e^{-iε_αt}|u_α(t)⟩    C(ρ) = max(0,λ₁-λ₂-λ₃-λ₄)    E_N = log₂‖ρᵀ_B‖₁    [H_F,D] = 0    J(ω) = η·ω·e^{-ω/ωc}    K(xᵢ,xⱼ) = |⟨φ(xᵢ)|φ(xⱼ)⟩|²    ∑_{j∈∂□} Eⱼ = 0    H_KS = -J∑□(U□+U□†) + h∑Zⱼ    W[C] = Tr[ ∏ Uₗ ]    Gⱼ|phys⟩ = 0    U_F = e^{-iH_FT}    ⟨σᶻ(nT)⟩ → (-1)ⁿM    ρ̇ = -i[H,ρ] + Σ LρL†    |ψ_F⟩ = e^{-iε t}|u_α⟩    C(ρ) = max(0,λ₁-λ₂-λ₃-λ₄)    ∑_{j∈∂□} Eⱼ = 0  (flux)    K(xᵢ,xⱼ) = |⟨φ(xᵢ)|φ(xⱼ)⟩|²    ⟨W⟩ ~ e^{-σA}    [H_F,D]=0  (MBL)";
+    position: fixed;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: 5%;
+    color: #e0e0e0;
+    opacity: 0.18;
+    font-family: var(--font-chalk);
+    font-size: 0.82rem;
+    line-height: 2.8;
+    transform: rotate(-1.2deg);
+    pointer-events: none;
+    z-index: -1;
+    white-space: pre-wrap;
+    word-spacing: 1.8rem;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      linear-gradient(45deg, transparent 48%, rgba(224, 224, 224, 0.025) 49%, rgba(224, 224, 224, 0.025) 51%, transparent 52%),
+      linear-gradient(-30deg, transparent 47%, rgba(74, 158, 255, 0.018) 48%, rgba(74, 158, 255, 0.018) 50%, transparent 51%),
+      linear-gradient(75deg, transparent 46%, rgba(119, 221, 119, 0.015) 47%, rgba(119, 221, 119, 0.015) 49%, transparent 50%),
+      radial-gradient(ellipse at 20% 30%, rgba(224, 224, 224, 0.03) 2px, transparent 2px),
+      radial-gradient(ellipse at 80% 70%, rgba(74, 158, 255, 0.02) 1px, transparent 1px);
+    background-size: 800px 400px, 600px 300px, 700px 350px, 150px 80px, 200px 120px;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    background: rgba(74, 158, 255, 0.2);
+    color: #e0e0e0;
+  }
+
+  a {
+    text-decoration-style: dotted;
+  }
+}
+
+@layer utilities {
+  .quantum-border {
+    position: relative;
+    background: rgba(17, 17, 17, 0.9);
+    border: 2px dashed rgba(224, 224, 224, 0.3);
+    border-radius: 0;
+    transform: rotate(-0.2deg);
+  }
+
+  .glass-effect {
+    background: rgba(17, 17, 17, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(224, 224, 224, 0.1);
+  }
+
+  .quantum-gradient {
+    background: linear-gradient(135deg, #4a9eff 0%, #77dd77 100%);
+  }
+
+  .equation-watermark {
+    opacity: 0.15;
+    position: absolute;
+    font-family: var(--font-chalk);
+    color: #e0e0e0;
+    font-size: 1rem;
+    transform: rotate(-1.5deg);
+    pointer-events: none;
+  }
+
+  .hero-gradient {
+    background: #0d0d0d;
+  }
+
+  .section-gradient {
+    background: linear-gradient(135deg, #0d0d0d 0%, #111111 100%);
+  }
+
+  .chalk-glow {
+    transition: all 0.4s ease;
+    position: relative;
+  }
+
+  .chalk-glow:hover {
+    box-shadow: 0 0 12px rgba(74, 158, 255, 0.3), 0 0 24px rgba(119, 221, 119, 0.15);
+    transform: rotate(-0.3deg);
+  }
+
+  .chalk-underline {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .chalk-underline::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: -2px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #4a9eff 0%, #77dd77 100%);
+    transition: width 0.4s ease;
+    transform: rotate(-0.8deg);
+    border-radius: 1px;
+  }
+
+  .chalk-underline:hover::after {
+    width: calc(100% + 4px);
+  }
+
+  .chalk-card {
+    background: rgba(17, 17, 17, 0.9);
+    border: 1px dashed rgba(224, 224, 224, 0.18);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .chalk-card:hover {
+    border-color: rgba(74, 158, 255, 0.4);
+    box-shadow: 0 4px 16px rgba(74, 158, 255, 0.12);
+  }
+
+  .chalk-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(224, 224, 224, 0.15) 15%, rgba(224, 224, 224, 0.25) 50%, rgba(224, 224, 224, 0.15) 85%, transparent 100%);
+    transform: rotate(-0.4deg);
+    margin: 2rem 0;
+    border-radius: 1px;
+  }
+
+  .chalk-handwritten {
+    font-family: var(--font-chalk);
+    transform: rotate(-0.8deg);
+    letter-spacing: 0.03em;
+  }
+
+  /* Fixed chalk scribble lines — decorative */
+  .chalk-scribble-1 {
+    position: fixed;
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(224, 224, 224, 0.18) 20%, rgba(224, 224, 224, 0.1) 80%, transparent 100%);
+    transform: rotate(-12deg);
+    top: 15%;
+    left: 10%;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .chalk-scribble-2 {
+    position: fixed;
+    width: 150px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent 0%, rgba(74, 158, 255, 0.15) 30%, rgba(74, 158, 255, 0.08) 70%, transparent 100%);
+    transform: rotate(8deg);
+    top: 60%;
+    right: 15%;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .chalk-scribble-3 {
+    position: fixed;
+    width: 180px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent 0%, rgba(119, 221, 119, 0.14) 25%, rgba(119, 221, 119, 0.07) 75%, transparent 100%);
+    transform: rotate(-5deg);
+    bottom: 25%;
+    left: 20%;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .chalk-scribble-4 {
+    position: fixed;
+    width: 120px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent 0%, rgba(168, 218, 220, 0.15) 20%, rgba(168, 218, 220, 0.08) 80%, transparent 100%);
+    transform: rotate(22deg);
+    top: 40%;
+    right: 25%;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .chalk-scribble-5 {
+    position: fixed;
+    width: 160px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(224, 224, 224, 0.1) 30%, rgba(224, 224, 224, 0.05) 70%, transparent 100%);
+    transform: rotate(-18deg);
+    bottom: 45%;
+    left: 35%;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .chalk-scribble-6 {
+    position: fixed;
+    width: 140px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent 0%, rgba(74, 158, 255, 0.14) 25%, rgba(74, 158, 255, 0.07) 75%, transparent 100%);
+    transform: rotate(35deg);
+    top: 75%;
+    right: 40%;
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0d0d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(74, 158, 255, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(74, 158, 255, 0.5);
+}
