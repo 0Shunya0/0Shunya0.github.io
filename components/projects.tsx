@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Github, BookOpen, FlaskConical, Microscope, Zap } from "lucide-react"
+import { ExternalLink, Github, BookOpen, FlaskConical, Microscope, Zap, FileText } from "lucide-react"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type ResearchStatus = "manuscript" | "active" | "completed" | "exploratory"
@@ -34,8 +34,77 @@ const STATUS_META: Record<ResearchStatus, { label: string; color: string }> = {
   exploratory: { label: "Exploratory Study", color: "#b08060" },
 }
 
+// ─── Publications ─────────────────────────────────────────────────────────────
+type PubStatus = "submitted" | "ready" | "drafting"
+
+interface Publication {
+  title: string
+  firstAuthor: boolean
+  status: PubStatus
+  venue?: string
+}
+
+const PUB_STATUS: Record<PubStatus, { label: string; color: string; desc: string }> = {
+  submitted: { label: "submitted", color: "#77dd77", desc: "under review" },
+  ready:     { label: "ready",     color: "#4a9eff", desc: "complete draft" },
+  drafting:  { label: "drafting",  color: "#b08060", desc: "in write-up" },
+}
+
+const PUBLICATIONS: Publication[] = [
+  {
+    title: "Variational Quantum Simulation of the Schwinger Model",
+    firstAuthor: true,
+    status: "ready",
+  },
+  {
+    title: "Drive-Structure vs Geometry in Floquet–Rondeau Discrete Time Crystals",
+    firstAuthor: true,
+    status: "drafting",
+  },
+  {
+    title: "Quantum Generative Models for Imbalanced Learning",
+    firstAuthor: false,
+    status: "submitted",
+    venue: "IEEE QCE 2026",
+  },
+  {
+    title: "Holonomic Quantum Gates in Disordered Photonic Waveguide Structures",
+    firstAuthor: false,
+    status: "submitted",
+    venue: "QIP (Springer)",
+  },
+  {
+    title: "Photon Blockade and Nonlinear Optics in Si₃N₄ Microring Cavities",
+    firstAuthor: false,
+    status: "submitted",
+    venue: "FiO+LS 2026",
+  },
+  {
+    title: "Optical Loss Mechanisms in Polymer and Glass Photonic Crystal Waveguides",
+    firstAuthor: false,
+    status: "submitted",
+    venue: "FiO+LS 2026",
+  },
+]
+
 const RESEARCH: ResearchEntry[] = [
   // ── FEATURED ─────────────────────────────────────────────────────────────
+  {
+    title: "Variational Quantum Simulation of the Schwinger Model",
+    subtitle: "U(1) Lattice Gauge Theory via VQE",
+    domain: "lgt",
+    status: "manuscript",
+    featured: true,
+    why: "The Schwinger model (1+1D QED) is the canonical testbed for quantum simulation of gauge theories. Demonstrating that VQE recovers known physics — including the string-breaking transition — establishes the computational framework for gauge systems inaccessible to classical methods.",
+    methods: [
+      "Jordan-Wigner transformation to qubit Hamiltonian (Kogut-Susskind formulation)",
+      "Hardware-efficient VQE ansatz with gauge-invariant encoding",
+      "Exact diagonalization benchmarking against trapped-ion experimental results",
+      "Entanglement entropy as order parameter for the string-breaking transition",
+    ],
+    outcome: "Reproduced trapped-ion benchmark results to 0.013% deviation. Identified entanglement entropy as a more noise-robust order parameter than local observables — critical for hardware implementation of gauge-invariant measurements under realistic noise.",
+    tools: ["Qiskit", "QuTiP", "Python", "NumPy/SciPy"],
+  },
   {
     title: "Holonomic Quantum Gates in Disordered Waveguide Structures",
     subtitle: "Robustness of Geometric Photonic Gates in Random Media",
@@ -48,7 +117,7 @@ const RESEARCH: ResearchEntry[] = [
       "Anderson localization in photonic waveguides",
       "Gate fidelity under disorder averaging",
     ],
-    outcome: "Quantified gate robustness thresholds as a function of disorder strength. Demonstrated partial preservation of geometric phase under moderate disorder.",
+    outcome: "Gate fidelity holds at ≈0.997 while concurrence falls to 0.49 under 1/f noise — showing that fidelity metrics alone systematically miss decoherence in geometric photonic gates. Establishes robustness thresholds as a function of disorder strength.",
     tools: ["QuTiP", "Python", "Lumerical (waveguide modeling)"],
   },
   // ── PRIMARY ───────────────────────────────────────────────────────────────
@@ -65,7 +134,7 @@ const RESEARCH: ResearchEntry[] = [
       "Exact diagonalization benchmarks",
       "Disorder sweeps and phase boundary mapping",
     ],
-    outcome: "Mapped critical disorder thresholds for ETH violation. Characterized long-lived period-doubled oscillations in prethermal regimes on 1D, 2D square, and honeycomb geometries.",
+    outcome: "Corrected a 19.2× mean-field overestimate of critical disorder down to the experimentally measured 5.0× via exact diagonalization. Mapped phase boundaries on 1D, 2D square, and honeycomb geometries; characterized long-lived period-doubled oscillations in prethermal regimes.",
     tools: ["Cirq", "NumPy", "SciPy", "Python"],
   },
   {
@@ -274,7 +343,7 @@ export function Projects() {
   const openQuestions = [
     "Can photonic platforms simulate real-time gauge field dynamics beyond classical tractability?",
     "How can decoherence be engineered - not eliminated - to preserve entanglement in open quantum systems?",
-    "What are scalable approaches to digital simulation of U(1) and SU(2) lattice gauge theories?",
+    "What are scalable routes to SU(2) and non-Abelian lattice gauge theories — beyond the U(1) Schwinger model?",
     "How does many-body localization structure the stability of non-equilibrium phases in driven lattice systems?",
   ]
 
@@ -298,17 +367,83 @@ export function Projects() {
             Research
           </h2>
           <p className="text-sm text-muted-foreground/60 max-w-2xl leading-relaxed font-mono">
-            Work spanning open quantum systems, non-equilibrium dynamics, and photonic platforms-
-            building toward quantum simulation of lattice gauge theories.
+            Lattice gauge theory simulation, non-equilibrium many-body dynamics, and photonic
+            platforms — from VQE implementation to phase boundary mapping to decoherence engineering.
           </p>
         </div>
+
+        {/* ── Publications & Manuscripts ─────────────────────────────── */}
+        <div className="mb-14">
+          <div className="flex items-center gap-3 mb-4">
+            <FileText className="h-4 w-4 text-primary/50" />
+            <p className="text-xs font-mono text-muted-foreground/45 uppercase tracking-wider">
+              Publications & Manuscripts
+            </p>
+          </div>
+
+          {/* Status key */}
+          <div className="flex flex-wrap gap-x-6 gap-y-1 mb-5">
+            {(Object.entries(PUB_STATUS) as [PubStatus, typeof PUB_STATUS[PubStatus]][]).map(([key, s]) => (
+              <div key={key} className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: s.color, opacity: 0.65 }} />
+                <span className="text-xs font-mono text-muted-foreground/38">{s.label} — {s.desc}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="space-y-1.5">
+            {PUBLICATIONS.map((pub, i) => (
+              <div
+                key={i}
+                className="flex items-start gap-4 px-4 py-2.5"
+                style={{
+                  background: "rgba(14,20,14,0.5)",
+                  border: "1px dashed rgba(200,230,200,0.07)",
+                }}
+              >
+                <span className="text-xs font-mono text-muted-foreground/22 shrink-0 mt-px">[{i + 1}]</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-start gap-2">
+                    <p className="text-sm font-mono text-foreground/75 leading-snug flex-1">{pub.title}</p>
+                    {pub.firstAuthor && (
+                      <span
+                        className="text-[10px] font-mono px-1.5 py-0.5 border shrink-0"
+                        style={{
+                          color: "#4a9eff",
+                          borderColor: "rgba(74,158,255,0.2)",
+                          background: "rgba(74,158,255,0.06)",
+                        }}
+                      >
+                        first author
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3 mt-0.5">
+                    <span
+                      className="text-xs font-mono"
+                      style={{ color: PUB_STATUS[pub.status].color, opacity: 0.8 }}
+                    >
+                      {PUB_STATUS[pub.status].label}
+                    </span>
+                    {pub.venue && (
+                      <span className="text-xs font-mono text-muted-foreground/32">{pub.venue}</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Chalk divider */}
+        <div className="chalk-divider mb-14" />
 
         {/* ── Featured Work ──────────────────────────────────────────── */}
         <div className="mb-14">
           <div className="flex items-center gap-3 mb-6">
             <BookOpen className="h-4 w-4 text-accent/60" />
             <p className="text-xs font-mono text-muted-foreground/45 uppercase tracking-wider">
-              Featured - Manuscripts in Preparation
+              Featured Research
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-4">

@@ -23,7 +23,7 @@ const SKILL_GROUPS = [
       { name: "Open quantum systems", note: "Lindblad master equation, Markovian dynamics, reservoir engineering" },
       { name: "Floquet theory", note: "Driven many-body systems, time-crystalline phases, stroboscopic evolution" },
       { name: "Many-body physics", note: "Spin models, MBL, eigenstate thermalization, disorder" },
-      { name: "Lattice gauge theory", note: "Kogut-Susskind Hamiltonian, Gauss law, Wilson loops (developing)" },
+      { name: "Lattice gauge theory", note: "Schwinger model VQE, Jordan-Wigner & Kogut-Susskind formulations, exact diagonalization benchmarking" },
       { name: "Cavity QED / photonics", note: "Decoherence engineering, entanglement measures, metasurface modeling" },
     ],
   },

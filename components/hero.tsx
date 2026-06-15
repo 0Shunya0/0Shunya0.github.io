@@ -431,12 +431,12 @@ export function Hero() {
                 Computational Quantum Physics
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
-                Quantum simulation of lattice gauge theories, with focus on
-                real-time dynamics and non-equilibrium systems.
+                Variational quantum simulation of lattice gauge theories and
+                non-equilibrium many-body dynamics.
               </p>
               <p className="text-xs text-muted-foreground/55 font-mono leading-relaxed max-w-md">
-                Current work: open quantum systems and photonic platforms as
-                computational testbeds for many-body dynamics.
+                Current: Schwinger model via VQE, Floquet time crystals, open
+                quantum systems — real-time gauge dynamics beyond classical reach.
               </p>
             </div>
 
