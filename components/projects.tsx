@@ -66,7 +66,6 @@ const PUBLICATIONS: Publication[] = [
     title: "Quantum Generative Models for Imbalanced Learning",
     firstAuthor: false,
     status: "ready",
-    venue: "IEEE QCE 2026",
   },
   {
     title: "Holonomic Quantum Gates in Disordered Photonic Waveguide Structures",
