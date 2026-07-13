@@ -35,7 +35,7 @@ const STATUS_META: Record<ResearchStatus, { label: string; color: string }> = {
 }
 
 // ─── Publications ─────────────────────────────────────────────────────────────
-type PubStatus = "submitted" | "ready" | "drafting"
+type PubStatus = "submitted" | "ready" | "drafting" | "accepted"
 
 interface Publication {
   title: string
@@ -48,6 +48,7 @@ const PUB_STATUS: Record<PubStatus, { label: string; color: string; desc: string
   submitted: { label: "submitted", color: "#77dd77", desc: "under review" },
   ready:     { label: "ready",     color: "#4a9eff", desc: "complete draft" },
   drafting:  { label: "drafting",  color: "#b08060", desc: "in write-up" },
+  accepted:  { label: "accepted",  color: "#c4a84c", desc: "accepted for publication" },
 }
 
 const PUBLICATIONS: Publication[] = [
@@ -64,7 +65,7 @@ const PUBLICATIONS: Publication[] = [
   {
     title: "Quantum Generative Models for Imbalanced Learning",
     firstAuthor: false,
-    status: "submitted",
+    status: "ready",
     venue: "IEEE QCE 2026",
   },
   {
@@ -76,13 +77,13 @@ const PUBLICATIONS: Publication[] = [
   {
     title: "Photon Blockade and Nonlinear Optics in Si₃N₄ Microring Cavities",
     firstAuthor: false,
-    status: "submitted",
+    status: "accepted",
     venue: "FiO+LS 2026",
   },
   {
     title: "Optical Loss Mechanisms in Polymer and Glass Photonic Crystal Waveguides",
     firstAuthor: false,
-    status: "submitted",
+    status: "accepted",
     venue: "FiO+LS 2026",
   },
 ]
