@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink, Github, BookOpen, FlaskConical, Microscope, Zap, FileText } from "lucide-react"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type ResearchStatus = "manuscript" | "active" | "completed" | "exploratory" | "submitted" | "accepted" | "revision"
+type ResearchStatus = "manuscript" | "active" | "completed" | "exploratory" | "submitted" | "accepted"
 type ResearchDomain = "lgt" | "floquet" | "openqs" | "qml"
 
 interface ResearchEntry {
@@ -37,11 +37,10 @@ const STATUS_META: Record<ResearchStatus, { label: string; color: string }> = {
   exploratory: { label: "Exploratory Study", color: "#b08060" },
   submitted: { label: "Submitted", color: "#77dd77" },
   accepted: { label: "Accepted", color: "#c4a84c" },
-  revision: { label: "In Revision", color: "#f4a261" },
 }
 
 // ─── Publications ─────────────────────────────────────────────────────────────
-type PubStatus = "submitted" | "ready" | "drafting" | "accepted" | "revision"
+type PubStatus = "submitted" | "ready" | "drafting" | "accepted"
 
 interface Publication {
   title: string
@@ -55,14 +54,13 @@ const PUB_STATUS: Record<PubStatus, { label: string; color: string; desc: string
   ready:     { label: "ready",     color: "#4a9eff", desc: "complete draft" },
   drafting:  { label: "drafting",  color: "#b08060", desc: "in write-up" },
   accepted:  { label: "accepted",  color: "#c4a84c", desc: "accepted for publication" },
-  revision:  { label: "in revision", color: "#f4a261", desc: "revising per reviewer feedback" },
 }
 
 const PUBLICATIONS: Publication[] = [
   {
     title: "Variational Quantum Simulation of the Schwinger Model",
     firstAuthor: true,
-    status: "revision",
+    status: "ready",
   },
   {
     title: "Drive Structure Reverses the Sign of Coordination Sensitivity in Prethermal Time Crystals",
@@ -101,7 +99,7 @@ const RESEARCH: ResearchEntry[] = [
     title: "Variational Quantum Simulation of the Schwinger Model",
     subtitle: "U(1) Lattice Gauge Theory via VQE",
     domain: "lgt",
-    status: "revision",
+    status: "manuscript",
     featured: true,
     why: "The Schwinger model (1+1D QED) is the canonical testbed for quantum simulation of gauge theories. Demonstrating that VQE recovers known physics — including the string-breaking transition — establishes the computational framework for gauge systems inaccessible to classical methods.",
     methods: [

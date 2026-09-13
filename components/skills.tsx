@@ -59,6 +59,7 @@ const TEACHING = [
     period: "Aug–Dec 2025",
     detail:
       "Lab sessions covering quantum algorithms, entanglement measures, stabilizer formalism, quantum channels. Delivered invited lectures on entanglement theory and circuit models.",
+    siteUrl: "https://0shunya0.github.io/QEQC_course_website/",
   },
   {
     course: "Quantum Transport & Logic Gates",
@@ -251,6 +252,17 @@ export function Skills() {
                   <span className="text-xs font-mono text-muted-foreground/35 shrink-0">{t.period}</span>
                 </div>
                 <p className="text-xs text-muted-foreground/55 leading-relaxed">{t.detail}</p>
+                {t.siteUrl && (
+                  <a
+                    href={t.siteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono text-accent/55 hover:text-accent/80 transition-colors mt-2"
+                  >
+                    Open course site
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                )}
               </div>
             ))}
           </div>

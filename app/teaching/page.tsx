@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowLeft, FileText, BookOpen, Clock, Download } from "lucide-react"
+import { ArrowLeft, FileText, BookOpen, Download, ExternalLink } from "lucide-react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -8,254 +8,112 @@ export const metadata: Metadata = {
         "Structured lecture notes in quantum mechanics, quantum computing, and quantum transport. Developed during teaching assistantships at PES University.",
 }
 
-type NoteTag = "Foundations" | "Advanced" | "Simulation-oriented" | "Hardware-oriented"
-
-interface NoteEntry {
+interface CourseCard {
     id: string
-    title: string
-    subtitle: string
     course: string
-    tag: NoteTag
-    topics: string[]
+    role: string
+    period: string
+    color: string
+    description: string
+    siteUrl?: string
     pdfPath?: string
-    available: boolean
 }
 
-const NOTES: NoteEntry[] = [
-    // ── Quantum Entanglement & Quantum Computing ────────────────────────────────
+const COURSES: CourseCard[] = [
     {
-        id: "hilbert",
-        title: "Quantum States & Hilbert Spaces",
-        subtitle: "Foundations of state representation and operator formalism",
+        id: "qeqc",
         course: "Quantum Entanglement & Quantum Computing",
-        tag: "Foundations",
-        topics: [
-            "State vectors and Dirac notation",
-            "Bra-ket formalism",
-            "Observables and Hermitian operators",
-            "Completeness and orthonormality",
-        ],
-        available: false,
+        role: "Teaching Assistant",
+        period: "Aug–Dec 2025",
+        color: "#4a9eff",
+        description: "Full course website with lecture material, problem sets, and simulation labs.",
+        siteUrl: "https://0shunya0.github.io/QEQC_course_website/",
     },
     {
-        id: "entanglement",
-        title: "Entanglement & Separability",
-        subtitle: "Structure of multipartite quantum systems",
-        course: "Quantum Entanglement & Quantum Computing",
-        tag: "Advanced",
-        topics: [
-            "Tensor products and composite systems",
-            "Schmidt decomposition",
-            "Entanglement measures: concurrence, negativity",
-            "PPT criterion and separability tests",
-        ],
-        available: false,
-    },
-    {
-        id: "channels",
-        title: "Quantum Channels & Noise",
-        subtitle: "Completely positive maps and Kraus representation",
-        course: "Quantum Entanglement & Quantum Computing",
-        tag: "Simulation-oriented",
-        topics: [
-            "Kraus operators and operator-sum representation",
-            "Depolarizing, dephasing, amplitude damping channels",
-            "Choi-Jamiolkowski isomorphism",
-            "Simulation of noisy circuits",
-        ],
-        available: false,
-    },
-    {
-        id: "stabilizer",
-        title: "Stabilizer Formalism",
-        subtitle: "Efficient simulation and error correction",
-        course: "Quantum Entanglement & Quantum Computing",
-        tag: "Advanced",
-        topics: [
-            "Pauli group and stabilizer states",
-            "Clifford circuits and efficient simulation",
-            "Stabilizer codes (Steane, Shor)",
-            "Fault-tolerant gate sets",
-        ],
-        available: false,
-    },
-    // ── Quantum Transport & Logic Gates ────────────────────────────────────────
-    {
-        id: "lindblad",
-        title: "Open Quantum Systems & Lindblad Dynamics",
-        subtitle: "Master equation formalism for dissipative evolution",
+        id: "qtlg",
         course: "Quantum Transport & Logic Gates",
-        tag: "Simulation-oriented",
-        topics: [
-            "Markovian approximation and Born-Markov limit",
-            "Lindblad master equation derivation",
-            "Steady states and decoherence timescales",
-            "Numerical integration with QuTiP",
-        ],
-        available: false,
-    },
-    {
-        id: "transport",
-        title: "Quantum Transport Models",
-        subtitle: "Conductance, dissipation, and scattering in quantum systems",
-        course: "Quantum Transport & Logic Gates",
-        tag: "Hardware-oriented",
-        topics: [
-            "Landauer-Büttiker formalism",
-            "Transmission coefficients and conductance quantization",
-            "Dissipative transport and loss mechanisms",
-            "Gate robustness under transport noise",
-        ],
+        role: "Teaching Assistant",
+        period: "Jan–May 2026",
+        color: "#f4a261",
+        description:
+            "Quantum Transport Models. Landauer–Büttiker formalism, conductance quantization, dissipative transport, gate robustness under transport noise.",
         pdfPath: "/notes/qtlg_tr-6.pdf",
-        available: true,
     },
-    // ── Introduction to Quantum Computing ─────────────────────────────────────
     {
-        id: "dft",
-        title: "Quantum Fourier Transform & DFT Programming",
-        subtitle: "From classical DFT to QFT circuits — implementation and intuition",
+        id: "iqc",
         course: "Introduction to Quantum Computing",
-        tag: "Simulation-oriented",
-        topics: [
-            "Discrete Fourier Transform review and matrix form",
-            "QFT circuit construction and gate decomposition",
-            "Phase kickback and periodicity detection",
-            "Implementation on IBM Quantum hardware",
-        ],
+        role: "Subject Matter Expert, PESU IO",
+        period: "Aug–Nov 2025",
+        color: "#77dd77",
+        description:
+            "Quantum Fourier Transform & DFT Programming. DFT to QFT circuits, gate decomposition, phase kickback, IBM Quantum implementation.",
         pdfPath: "/notes/dft_prog-1.pdf",
-        available: true,
-    },
-    {
-        id: "algorithms",
-        title: "Variational Quantum Algorithms",
-        subtitle: "VQE, QAOA, and hybrid quantum-classical methods",
-        course: "Introduction to Quantum Computing",
-        tag: "Simulation-oriented",
-        topics: [
-            "Variational Quantum Eigensolver (VQE)",
-            "Quantum Approximate Optimization Algorithm (QAOA)",
-            "Ansatz design and parameter optimization",
-            "Noise-aware circuit compilation on IBM Quantum",
-        ],
-        available: false,
     },
 ]
 
-const TAG_CONFIG: Record<NoteTag, { color: string; bg: string; border: string }> = {
-    Foundations: { color: "#a8dadc", bg: "rgba(168,218,220,0.07)", border: "rgba(168,218,220,0.25)" },
-    Advanced: { color: "#4a9eff", bg: "rgba(74,158,255,0.07)", border: "rgba(74,158,255,0.25)" },
-    "Simulation-oriented": { color: "#77dd77", bg: "rgba(119,221,119,0.07)", border: "rgba(119,221,119,0.25)" },
-    "Hardware-oriented": { color: "#f4a261", bg: "rgba(244,162,97,0.07)", border: "rgba(244,162,97,0.25)" },
-}
-
-const COURSES = [
-    { name: "Quantum Entanglement & Quantum Computing", role: "Teaching Assistant", period: "Aug–Dec 2025", color: "#4a9eff" },
-    { name: "Quantum Transport & Logic Gates", role: "Teaching Assistant", period: "Jan–May 2026", color: "#f4a261" },
-    { name: "Introduction to Quantum Computing", role: "Subject Matter Expert, PESU IO", period: "Aug–Nov 2025", color: "#77dd77" },
-]
-
-function NoteCard({ note }: { note: NoteEntry }) {
-    const tag = TAG_CONFIG[note.tag]
-
+function CourseCardView({ item }: { item: CourseCard }) {
     return (
         <div
-            className="relative flex flex-col transition-all duration-200 group"
-            style={{
-                background: note.available ? "rgba(17,22,17,0.8)" : "rgba(14,18,14,0.55)",
-                border: note.available
-                    ? `1px solid ${tag.color}28`
-                    : "1px dashed rgba(200,230,200,0.08)",
-            }}
+            className="relative flex flex-col"
+            style={{ background: "rgba(17,22,17,0.8)", border: `1px solid ${item.color}28` }}
         >
-            {/* Top accent */}
-            <div
-                className="h-px w-full transition-opacity duration-300"
-                style={{ background: tag.color, opacity: note.available ? 0.6 : 0.2 }}
-            />
+            <div className="h-px w-full" style={{ background: item.color, opacity: 0.6 }} />
 
             <div className="p-5 flex flex-col flex-1">
-                {/* Tag + course */}
-                <div className="flex flex-wrap items-center gap-2 mb-3">
-                    <span
-                        className="text-xs font-mono px-2 py-0.5 border shrink-0"
-                        style={{ color: tag.color, borderColor: tag.border, background: tag.bg }}
-                    >
-                        {note.tag}
-                    </span>
-                    <span className="text-xs font-mono text-muted-foreground/28 truncate">
-                        {note.course}
-                    </span>
-                </div>
-
-                {/* Title */}
-                <h3
-                    className="text-base font-semibold font-chalk leading-snug mb-0.5"
-                    style={{ color: note.available ? "rgba(220,232,220,0.92)" : "rgba(200,220,200,0.55)" }}
-                >
-                    {note.title}
+                <h3 className="text-base font-semibold font-chalk leading-snug mb-0.5" style={{ color: "rgba(220,232,220,0.92)" }}>
+                    {item.course}
                 </h3>
-                <p className="text-xs font-mono text-muted-foreground/38 mb-4 italic">{note.subtitle}</p>
+                <p className="text-xs font-mono mt-0.5 mb-4" style={{ color: item.color, opacity: 0.7 }}>
+                    {item.role} · {item.period}
+                </p>
 
-                {/* Topics */}
-                <div className="space-y-1.5 mb-5 flex-1">
-                    {note.topics.map((topic, i) => (
-                        <div key={i} className="flex items-start gap-2">
-                            <span
-                                className="mt-2 shrink-0 rounded-full"
-                                style={{ width: 3, height: 3, background: tag.color, opacity: note.available ? 0.55 : 0.25, display: "block" }}
-                            />
-                            <p
-                                className="text-xs font-mono leading-snug"
-                                style={{ color: note.available ? "rgba(184,204,184,0.7)" : "rgba(184,204,184,0.38)" }}
-                            >
-                                {topic}
-                            </p>
-                        </div>
-                    ))}
-                </div>
+                <p className="text-xs font-mono leading-relaxed mb-5 flex-1" style={{ color: "rgba(184,204,184,0.7)" }}>
+                    {item.description}
+                </p>
 
-                {/* Action */}
-                {note.available && note.pdfPath ? (
-                    <div className="flex gap-2 mt-auto">
+                <div className="flex gap-2 mt-auto">
+                    {item.siteUrl && (
                         <a
-                            href={note.pdfPath}
+                            href={item.siteUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-2 border border-dashed transition-all duration-200 hover:opacity-80"
-                            style={{ borderColor: tag.border, color: tag.color, background: tag.bg }}
+                            style={{ borderColor: `${item.color}40`, color: item.color, background: `${item.color}10` }}
                         >
-                            <FileText className="h-3 w-3" />
-                            View PDF
+                            <ExternalLink className="h-3 w-3" />
+                            Open course site
                         </a>
-                        <a
-                            href={note.pdfPath}
-                            download
-                            className="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-2 border border-dashed transition-all duration-200"
-                            style={{ borderColor: "rgba(200,230,200,0.15)", color: "rgba(184,204,184,0.45)" }}
-                        >
-                            <Download className="h-3 w-3" />
-                            Download
-                        </a>
-                    </div>
-                ) : (
-                    <div className="mt-auto flex items-center gap-2">
-                        <Clock className="h-3 w-3 text-muted-foreground/18" />
-                        <span className="text-xs font-mono text-muted-foreground/22 italic">
-                            Being typeset
-                        </span>
-                    </div>
-                )}
+                    )}
+                    {item.pdfPath && (
+                        <>
+                            <a
+                                href={item.pdfPath}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-2 border border-dashed transition-all duration-200 hover:opacity-80"
+                                style={{ borderColor: `${item.color}40`, color: item.color, background: `${item.color}10` }}
+                            >
+                                <FileText className="h-3 w-3" />
+                                View PDF
+                            </a>
+                            <a
+                                href={item.pdfPath}
+                                download
+                                className="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-2 border border-dashed transition-all duration-200"
+                                style={{ borderColor: "rgba(200,230,200,0.15)", color: "rgba(184,204,184,0.45)" }}
+                            >
+                                <Download className="h-3 w-3" />
+                                Download
+                            </a>
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     )
 }
 
 export default function TeachingPage() {
-    const availableCount = NOTES.filter((n) => n.available).length
-    const totalCount = NOTES.length
-
-    const byCourseName = (name: string) => NOTES.filter((n) => n.course === name)
-
     return (
         <main className="min-h-screen bg-background text-foreground relative">
 
@@ -317,72 +175,14 @@ export default function TeachingPage() {
                         transport at PES University. Each set ties formal theory to the simulation
                         approaches used in the lab.
                     </p>
-                    <p className="text-xs font-mono text-muted-foreground/28 italic">
-                        Uploaded progressively as they are typeset.
-                    </p>
                 </div>
 
-                {/* Progress bar */}
-                <div
-                    className="flex flex-wrap items-center gap-4 px-4 py-3 mb-10"
-                    style={{ background: "rgba(14,18,14,0.6)", border: "1px dashed rgba(200,230,200,0.1)" }}
-                >
-                    <div className="flex items-center gap-2">
-                        <Clock className="h-3.5 w-3.5 text-muted-foreground/28" />
-                        <span className="text-xs font-mono text-muted-foreground/38">
-                            {availableCount} of {totalCount} notes live
-                        </span>
-                    </div>
-                    <div
-                        className="flex-1 min-w-[120px] h-0.5"
-                        style={{ background: "rgba(200,230,200,0.07)" }}
-                    >
-                        <div
-                            className="h-full transition-all duration-500"
-                            style={{
-                                width: `${(availableCount / totalCount) * 100}%`,
-                                background: "linear-gradient(90deg, #4a9eff, #77dd77)",
-                                opacity: 0.65,
-                            }}
-                        />
-                    </div>
+                {/* Course cards */}
+                <div className="grid md:grid-cols-3 gap-4 mb-14">
+                    {COURSES.map((item) => (
+                        <CourseCardView key={item.id} item={item} />
+                    ))}
                 </div>
-
-                {/* Course sections */}
-                {COURSES.map((course) => {
-                    const notes = byCourseName(course.name)
-                    const liveCount = notes.filter((n) => n.available).length
-                    return (
-                        <div key={course.name} className="mb-14">
-                            {/* Course header */}
-                            <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
-                                <div className="flex items-center gap-3">
-                                    <div
-                                        className="w-1.5 h-8 shrink-0"
-                                        style={{ background: course.color, opacity: 0.55 }}
-                                    />
-                                    <div>
-                                        <p className="text-sm font-semibold text-foreground/80 font-chalk leading-tight">
-                                            {course.name}
-                                        </p>
-                                        <p className="text-xs font-mono mt-0.5" style={{ color: course.color, opacity: 0.6 }}>
-                                            {course.role} · {course.period}
-                                        </p>
-                                    </div>
-                                </div>
-                                <span className="text-xs font-mono text-muted-foreground/28">
-                                    {liveCount}/{notes.length} available
-                                </span>
-                            </div>
-
-                            <div className="grid md:grid-cols-2 gap-3">
-                                {notes.map((note) => (
-                                    <NoteCard key={note.id} note={note} />
-                                ))}
-                            </div>
-                        </div>
-                    )
-                })}
 
                 <div className="chalk-divider mb-10" />
 

@@ -39,7 +39,7 @@ const merriweather = Merriweather({
 export const metadata: Metadata = {
   title: "Machiraju Karthikeya | Quantum Simulation",
   description:
-    "Undergraduate researcher in computational quantum physics. Quantum simulation of lattice gauge theories, non-equilibrium many-body dynamics, and open quantum systems. PES University & IIT Madras.",
+    "Undergraduate researcher in computational quantum physics. Quantum simulation of lattice gauge theories, non-equilibrium many-body dynamics, and open quantum systems. PES University.",
   keywords: [
     "quantum simulation",
     "lattice gauge theory",
