@@ -43,7 +43,7 @@ const TEACHING = [
   {
     title: "Teaching Assistant: Quantum Transport & Logic Gates",
     org: "PES University",
-    period: "Jan 2026 - Present",
+    period: "Jan - May 2026",
     color: "#a8dadc",
     points: [
       "Conducted lab sessions on quantum transport models, dissipation, and hardware-aware gate realizations",

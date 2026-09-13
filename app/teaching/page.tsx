@@ -150,7 +150,7 @@ const TAG_CONFIG: Record<NoteTag, { color: string; bg: string; border: string }>
 
 const COURSES = [
     { name: "Quantum Entanglement & Quantum Computing", role: "Teaching Assistant", period: "Aug–Dec 2025", color: "#4a9eff" },
-    { name: "Quantum Transport & Logic Gates", role: "Teaching Assistant", period: "Jan 2026–Present", color: "#f4a261" },
+    { name: "Quantum Transport & Logic Gates", role: "Teaching Assistant", period: "Jan–May 2026", color: "#f4a261" },
     { name: "Introduction to Quantum Computing", role: "Subject Matter Expert, PESU IO", period: "Aug–Nov 2025", color: "#77dd77" },
 ]
 

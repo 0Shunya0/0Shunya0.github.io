@@ -63,7 +63,7 @@ const TEACHING = [
   {
     course: "Quantum Transport & Logic Gates",
     role: "Teaching Assistant",
-    period: "Jan 2026–Present",
+    period: "Jan–May 2026",
     detail:
       "Lab sessions on quantum transport models, dissipation, hardware-aware gate realizations. Invited lecture modules on loss mechanisms and gate robustness.",
   },

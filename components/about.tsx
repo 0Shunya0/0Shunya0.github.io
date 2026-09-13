@@ -95,8 +95,8 @@ export function About() {
 
             <div className="flex flex-wrap gap-4">
               {[
-                { role: "Club Head", org: "Q-Forest Quantum Computing Society", note: "100+ members", color: "#4a9eff" },
-                { role: "Research Head", org: "Equinox Space Technology Society", note: "Quantum sensing & astrophysics", color: "#77dd77" },
+                { role: "Club Head", org: "Q-Forest Quantum Computing Society", note: "100+ members", period: "May 2024 – May 2025", color: "#4a9eff" },
+                { role: "Research Head", org: "Equinox Space Technology Society", note: "Quantum sensing & astrophysics", period: "May 2024 – May 2025", color: "#77dd77" },
               ].map((l, i) => (
                 <div
                   key={i}
@@ -107,6 +107,7 @@ export function About() {
                   <div>
                     <p className="text-xs font-mono" style={{ color: l.color, opacity: 0.8 }}>{l.role}</p>
                     <p className="text-xs text-muted-foreground/55">{l.org}</p>
+                    <p className="text-xs font-mono text-muted-foreground/25 mt-0.5">{l.period}</p>
                     <p className="text-xs text-muted-foreground/30 mt-0.5">{l.note}</p>
                   </div>
                 </div>
