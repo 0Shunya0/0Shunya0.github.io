@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink, Github, BookOpen, FlaskConical, Microscope, Zap, FileText } from "lucide-react"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type ResearchStatus = "manuscript" | "active" | "completed" | "exploratory"
+type ResearchStatus = "manuscript" | "active" | "completed" | "exploratory" | "submitted" | "accepted" | "revision"
 type ResearchDomain = "lgt" | "floquet" | "openqs" | "qml"
 
 interface ResearchEntry {
@@ -10,6 +10,9 @@ interface ResearchEntry {
   subtitle: string
   domain: ResearchDomain
   status: ResearchStatus
+  // Overrides the STATUS_META label for this card only (e.g. to include a venue) —
+  // status still drives badge color, statusLabel only overrides the displayed text.
+  statusLabel?: string
   featured: boolean
   why: string
   methods: string[]
@@ -32,10 +35,13 @@ const STATUS_META: Record<ResearchStatus, { label: string; color: string }> = {
   active: { label: "Active Research", color: "#77dd77" },
   completed: { label: "Completed Study", color: "#4a9eff" },
   exploratory: { label: "Exploratory Study", color: "#b08060" },
+  submitted: { label: "Submitted", color: "#77dd77" },
+  accepted: { label: "Accepted", color: "#c4a84c" },
+  revision: { label: "In Revision", color: "#f4a261" },
 }
 
 // ─── Publications ─────────────────────────────────────────────────────────────
-type PubStatus = "submitted" | "ready" | "drafting" | "accepted"
+type PubStatus = "submitted" | "ready" | "drafting" | "accepted" | "revision"
 
 interface Publication {
   title: string
@@ -49,23 +55,25 @@ const PUB_STATUS: Record<PubStatus, { label: string; color: string; desc: string
   ready:     { label: "ready",     color: "#4a9eff", desc: "complete draft" },
   drafting:  { label: "drafting",  color: "#b08060", desc: "in write-up" },
   accepted:  { label: "accepted",  color: "#c4a84c", desc: "accepted for publication" },
+  revision:  { label: "in revision", color: "#f4a261", desc: "revising per reviewer feedback" },
 }
 
 const PUBLICATIONS: Publication[] = [
   {
     title: "Variational Quantum Simulation of the Schwinger Model",
     firstAuthor: true,
-    status: "ready",
+    status: "revision",
   },
   {
-    title: "Drive-Structure vs Geometry in Floquet–Rondeau Discrete Time Crystals",
+    title: "Drive Structure Reverses the Sign of Coordination Sensitivity in Prethermal Time Crystals",
     firstAuthor: true,
     status: "drafting",
   },
   {
-    title: "Quantum Generative Models for Imbalanced Learning",
-    firstAuthor: false,
-    status: "ready",
+    title: "Where Does Quantum Generative Augmentation Help? Decomposing Rebalancing, Diversity, and Learning in Imbalanced Classification",
+    firstAuthor: true,
+    status: "submitted",
+    venue: "Quantum Machine Intelligence",
   },
   {
     title: "Holonomic Quantum Gates in Disordered Photonic Waveguide Structures",
@@ -93,7 +101,7 @@ const RESEARCH: ResearchEntry[] = [
     title: "Variational Quantum Simulation of the Schwinger Model",
     subtitle: "U(1) Lattice Gauge Theory via VQE",
     domain: "lgt",
-    status: "manuscript",
+    status: "revision",
     featured: true,
     why: "The Schwinger model (1+1D QED) is the canonical testbed for quantum simulation of gauge theories. Demonstrating that VQE recovers known physics — including the string-breaking transition — establishes the computational framework for gauge systems inaccessible to classical methods.",
     methods: [
@@ -109,7 +117,8 @@ const RESEARCH: ResearchEntry[] = [
     title: "Holonomic Quantum Gates in Disordered Waveguide Structures",
     subtitle: "Robustness of Geometric Photonic Gates in Random Media",
     domain: "openqs",
-    status: "manuscript",
+    status: "submitted",
+    statusLabel: "Submitted, QIP (Springer)",
     featured: true,
     why: "Geometric phases are intrinsically noise-resilient. Establishing their robustness in disordered photonic media is key to fault-tolerant photonic quantum computing.",
     methods: [
@@ -122,8 +131,8 @@ const RESEARCH: ResearchEntry[] = [
   },
   // ── PRIMARY ───────────────────────────────────────────────────────────────
   {
-    title: "Two-Dimensional Discrete Time Crystal Simulation",
-    subtitle: "Floquet DTC vs Rondeau Temporal Order across Spatial Geometries",
+    title: "Drive Structure Reverses the Sign of Coordination Sensitivity in Prethermal Time Crystals",
+    subtitle: "Two-Dimensional Discrete Time Crystal Simulation",
     domain: "floquet",
     status: "active",
     featured: false,
@@ -153,6 +162,22 @@ const RESEARCH: ResearchEntry[] = [
     tools: ["QuTiP", "Python", "SymPy"],
   },
   {
+    title: "Where Does Quantum Generative Augmentation Help?",
+    subtitle: "Decomposing Rebalancing, Diversity, and Learning in Imbalanced Classification",
+    domain: "qml",
+    status: "submitted",
+    featured: false,
+    why: "Reported gains from quantum generative models are rarely separated into their sources. This work decomposes a reported advantage into class rebalancing, sample diversity, and genuine learning, and tests each with explicit controls.",
+    methods: [
+      "Untrained-generator control: identical initialization, zero training steps",
+      "Noise-injection ablation on a deterministic quantum generator",
+      "Calibration-aware protocol with per-seed resampling over 15 seeds",
+      "Real-hardware noise characterization on IBM Fez, depth- and qubit-matched",
+    ],
+    outcome: "Rebalancing accounts for most of the reported effect; diversity contributes less and only at extreme scarcity; genuine learning contributes least, appearing in one of six evaluated cells. A protocol ablation shows that single result is itself contingent on a calibrated decision threshold and a random-forest downstream classifier.",
+    tools: ["PennyLane", "Qiskit", "IBM Fez", "scikit-learn", "Python"],
+  },
+  {
     title: "Quantum Support Vector Machines for HEP Event Classification",
     subtitle: "Quantum Kernel Methods on CERN Open Data",
     domain: "qml",
@@ -172,7 +197,8 @@ const RESEARCH: ResearchEntry[] = [
     title: "Optical Loss Mechanisms in Polymer and Glass Photonic Crystals",
     subtitle: "Defect-Induced Attenuation and Scattering Analysis",
     domain: "openqs",
-    status: "manuscript",
+    status: "accepted",
+    statusLabel: "Accepted, FiO+LS 2026",
     featured: false,
     why: "Loss mechanisms limit photonic platform viability for quantum simulation. Characterizing defect-induced attenuation is a prerequisite for engineering low-loss photonic quantum systems.",
     methods: [
@@ -220,7 +246,7 @@ function DomainPip({ domain }: { domain: ResearchDomain }) {
   )
 }
 
-function StatusBadge({ status }: { status: ResearchStatus }) {
+function StatusBadge({ status, label }: { status: ResearchStatus; label?: string }) {
   const meta = STATUS_META[status]
   return (
     <span
@@ -231,7 +257,7 @@ function StatusBadge({ status }: { status: ResearchStatus }) {
         background: `${meta.color}08`,
       }}
     >
-      {meta.label}
+      {label ?? meta.label}
     </span>
   )
 }
@@ -260,7 +286,7 @@ function ResearchCard({ entry, index }: { entry: ResearchEntry; index: number })
         <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
           <div className="flex flex-wrap items-center gap-2">
             <DomainPip domain={entry.domain} />
-            <StatusBadge status={entry.status} />
+            <StatusBadge status={entry.status} label={entry.statusLabel} />
           </div>
           <span className="text-xs font-mono text-muted-foreground/25">#{String(index + 1).padStart(2, "0")}</span>
         </div>

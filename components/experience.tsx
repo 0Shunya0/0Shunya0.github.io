@@ -97,6 +97,7 @@ const EDUCATION = [
       "Nonlinear Optics & Quantum Technology",
       "Chip-Level Photonics",
       "Linear Algebra & Its Applications",
+      "Design & Analysis of Algorithms",
     ],
   },
 ]

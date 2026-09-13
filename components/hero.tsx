@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowDown, Github, Linkedin, Mail, FileText, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowDown, Github, Linkedin, Mail, FileText, ChevronLeft, ChevronRight } from "lucide-react"
 import { useEffect, useRef, useState, useCallback } from "react"
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -506,13 +506,6 @@ export function Hero() {
                 asChild>
                 <a href="/Karthikeya_Machiraju_CV.pdf" target="_blank" rel="noopener noreferrer">
                   <FileText className="h-4 w-4 mr-2" />CV
-                </a>
-              </Button>
-              <Button variant="outline" size="default"
-                className="border-border/40 text-muted-foreground/60 hover:border-accent/60 hover:text-accent bg-transparent font-mono text-sm"
-                asChild>
-                <a href="https://arxiv.org/search/?searchtype=author&query=Machiraju" target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4 mr-2" />arXiv
                 </a>
               </Button>
             </div>

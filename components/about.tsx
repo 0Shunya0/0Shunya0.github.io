@@ -1,26 +1,10 @@
-import { GraduationCap, Target, Users, BookOpen } from "lucide-react"
+import { Target, Users } from "lucide-react"
 
 const RESEARCH_FOCUS = [
   { topic: "Lattice gauge theories", detail: "Real-time dynamics, Gauss-law constrained Hilbert spaces, Wilson loop observables", color: "#4a9eff", primary: true },
   { topic: "Open quantum systems", detail: "Lindblad dynamics, reservoir engineering, decoherence in photonic entanglement", color: "#a8dadc", primary: true },
   { topic: "Non-equilibrium many-body physics", detail: "Floquet-driven systems, discrete time crystals, eigenstate thermalization breakdown", color: "#77dd77", primary: true },
   { topic: "Photonic quantum platforms", detail: "Metasurface-assisted coherence protection, holonomic gates in disordered media", color: "#a8dadc", primary: false },
-]
-
-const EDUCATION = [
-  {
-    degree: "B.Tech, Computer Science (AI/ML)",
-    institution: "PES University, Bengaluru",
-    period: "2023-2027",
-    coursework: [
-      "Quantum Entanglement & Quantum Computing",
-      "Quantum Transport & Logic Gates",
-      "Nonlinear Optics & Quantum Technology",
-      "Linear Algebra & Its Applications",
-      "Design & Analysis of Algorithms",
-    ],
-    color: "#4a9eff",
-  },
 ]
 
 export function About() {
@@ -41,10 +25,10 @@ export function About() {
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground font-chalk mb-4">About</h2>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-10">
+        <div className="max-w-3xl">
 
-          {/* Left: Identity + Research Focus */}
-          <div className="lg:col-span-2 space-y-8">
+          {/* Identity + Research Focus */}
+          <div className="space-y-8">
 
             <div
               className="p-5"
@@ -128,49 +112,6 @@ export function About() {
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Right: Education */}
-          <div className="space-y-5">
-            <div className="flex items-center gap-2 mb-2">
-              <GraduationCap className="h-4 w-4 text-muted-foreground/35" />
-              <p className="text-xs font-mono text-muted-foreground/38 uppercase tracking-wider">Education</p>
-            </div>
-
-            {EDUCATION.map((edu, i) => (
-              <div
-                key={i}
-                className="p-4"
-                style={{
-                  background: "rgba(17,17,17,0.45)",
-                  border: "1px dashed rgba(224,224,224,0.08)",
-                  borderLeft: `2px solid ${edu.color}55`,
-                }}
-              >
-                <div className="pl-2">
-                  <p className="text-sm font-semibold text-foreground/80 font-chalk leading-snug mb-0.5">
-                    {edu.degree}
-                  </p>
-                  <p className="text-xs font-mono text-muted-foreground/50 mb-0.5">{edu.institution}</p>
-                  <p className="text-xs font-mono text-muted-foreground/30 mb-3">{edu.period}</p>
-                  <div className="flex items-center gap-1.5 mb-2">
-                    <BookOpen className="h-3 w-3 text-muted-foreground/25" />
-                    <p className="text-xs font-mono text-muted-foreground/30 uppercase tracking-wider">
-                      Relevant coursework
-                    </p>
-                  </div>
-                  <div className="space-y-1">
-                    {edu.coursework.map((course, j) => (
-                      <div key={j} className="flex items-start gap-1.5">
-                        <span className="mt-1.5 w-1 h-1 rounded-full shrink-0" style={{ background: edu.color, opacity: 0.4 }} />
-                        <p className="text-xs text-muted-foreground/50 leading-snug font-mono">{course}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-
           </div>
 
         </div>
