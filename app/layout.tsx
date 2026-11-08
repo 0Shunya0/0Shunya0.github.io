@@ -1,7 +1,12 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter, JetBrains_Mono, Patrick_Hand_SC, Merriweather, Caveat } from "next/font/google"
+import Script from "next/script"
 import "./globals.css"
+
+// Umami Cloud analytics (public ID, not a secret). Only loaded in production builds.
+const umamiWebsiteId = "b41dd33b-787f-49c8-a684-cb9bd0b25293"
+const enableAnalytics = process.env.NODE_ENV === "production"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -75,6 +80,13 @@ export default function RootLayout({
     >
       <body className="bg-background text-foreground overflow-x-hidden">
         {children}
+        {enableAnalytics && (
+          <Script
+            src="https://cloud.umami.is/script.js"
+            data-website-id={umamiWebsiteId}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   )
