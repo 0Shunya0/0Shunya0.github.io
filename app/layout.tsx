@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, JetBrains_Mono, Patrick_Hand_SC, Merriweather, Caveat } from "next/font/google"
+import { Inter, JetBrains_Mono, Patrick_Hand_SC, Merriweather } from "next/font/google"
+import localFont from "next/font/local"
 import Script from "next/script"
 import "./globals.css"
 
@@ -27,9 +28,11 @@ const patrickHandSC = Patrick_Hand_SC({
   variable: "--font-chalk",
 })
 
-const caveat = Caveat({
-  weight: ["400", "500", "600"],
-  subsets: ["latin"],
+// Self-hosted: Google Fonts now serves Caveat from extensionless URLs, which
+// crashes next/font/google at build time. Source: @fontsource-variable/caveat (OFL-1.1).
+const caveat = localFont({
+  src: "./fonts/caveat-latin-wght.woff2",
+  weight: "400 700",
   display: "swap",
   variable: "--font-handwritten",
 })
